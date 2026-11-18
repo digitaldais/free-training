@@ -156,45 +156,4 @@
 </script>
 
 </body>
-</html>  h1 em { color: var(--highlight); font-style: italic; }
-  .lede { font-size: 18px; max-width: 620px; margin-bottom: 28px; }
-  .video { position: relative; width: 100%; padding-top: 56.25%; background: var(--ink); border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(75,70,38,0.18); }
-  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-  .alt { margin-top: 14px; font-size: 15px; color: var(--ink-light); }
-  .alt a { color: var(--primary); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
-  .win { background: var(--surface); border-radius: 16px; padding: 28px 28px 26px; margin-top: 36px; }
-  .win h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
-  .win p { margin-bottom: 0; }
-  .sign { margin-top: 28px; font-weight: 700; color: var(--primary); }
-</style>
-</head>
-<body>
-<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2060690691990850&ev=PageView&noscript=1" alt=""></noscript>
-<main class="wrap">
-  <span class="eyebrow">You're in</span>
-  <h1>Your training is ready, <em>press play</em></h1>
-  <p class="lede">Watch it below. I've also emailed you the link, so check your inbox (and your junk folder) if you want it for later.</p>
-  <div class="video">
-    <iframe src="https://www.loom.com/embed/356aa1fe787d43618930c4bc2431249f" title="30 Days to Fully Booked: The Content Strategy Nobody Taught You" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe>
-  </div>
-  <p class="alt">Video not playing? <a href="https://www.loom.com/share/356aa1fe787d43618930c4bc2431249f">Watch it on Loom instead</a>.</p>
-  <section class="win">
-    <h2>Your quick win</h2>
-    <p>Watch right to the end, because that's where you work out which stage your audience is at. Pick the first question you answer "not really" to, and that's the type of content to prioritise this month.</p>
-  </section>
-  <p class="sign">Your IG Coach bestie,<br>Dais 💘</p>
-</main>
-<script>
-  // Fire the Lead event once per visit (stops a refresh counting twice)
-  (function () {
-    var fired = false;
-    try { fired = sessionStorage.getItem('fb_lead_sent') === '1'; } catch (e) {}
-    if (!fired && typeof fbq === 'function') {
-      fbq('track', 'Lead');
-      try { sessionStorage.setItem('fb_lead_sent', '1'); } catch (e) {}
-    }
-  })();
-</script>
-
-</body>
 </html>
