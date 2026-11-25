@@ -454,7 +454,8 @@ function results() {
   ${S.unlocked ? '' : `<div class="gate"><h2>Your full <em>Content Map</em> is ready</h2>
     <p class="sub">Unlock your 4C audience journey, your content health score, your FAN posting plan, 3 starter hooks and your story card</p>
     <form id="gate" novalidate><div class="g2"><div><label class="f" for="fn">First name</label><input id="fn" type="text" autocomplete="given-name" required></div>
-    <div><label class="f" for="em">Email</label><input id="em" type="email" autocomplete="email" required></div></div>
+    <div><label class="f" for="ig">Instagram handle</label><div class="money"><span>@</span><input id="ig" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="60" required></div></div></div>
+    <label class="f" for="em">Email</label><input id="em" type="email" autocomplete="email" required>
     <div class="warn" id="gw"></div><button type="submit" style="margin-top:18px;width:100%">Unlock my Content Map</button>
     <p class="fine" style="text-align:center">You'll also get my emails on content and growing your biz, unsubscribe any time. <a href="https://learn.digitaldais.co.uk/privacy.html" target="_blank" rel="noopener" style="color:inherit">Privacy policy</a></p></form></div>`}
   <div id="rep" style="margin-top:26px" class="${S.unlocked ? '' : 'locked'}" ${S.unlocked ? '' : 'aria-hidden="true"'}>${report(c)}</div></div>`;
@@ -535,9 +536,12 @@ async function drawCard(c) {
 async function unlock(e) {
   e.preventDefault();
   const fn = $('#fn').value.trim(), em = $('#em').value.trim();
-  if (!fn || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { $('#gw').textContent = 'Pop in your first name and a proper email and it\'s all yours'; return; }
-  S.fname = fn; S.email = em; S.unlocked = true; save();
-  if (KIT_FORM_ID) { try { const fd = new FormData(); fd.append('email_address', em); fd.append('fields[first_name]', fn);
+  /* Accepts @name, name or a pasted instagram.com link, and keeps just the handle */
+  const ig = $('#ig').value.trim().replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[/?#].*$/, '').replace(/^@+/, '');
+  const miss = [!fn && 'your first name', !/^[A-Za-z0-9._]{1,30}$/.test(ig) && 'your Instagram handle', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em) && 'a proper email'].filter(Boolean);
+  if (miss.length) { $('#gw').textContent = 'Pop in ' + miss.join(', ').replace(/, ([^,]*)$/, ' and $1') + ' and it\'s all yours'; return; }
+  S.fname = fn; S.email = em; S.ig = ig; S.unlocked = true; save();
+  if (KIT_FORM_ID) { try { const fd = new FormData(); fd.append('email_address', em); fd.append('fields[first_name]', fn); fd.append('fields[instagram_handle]', '@' + ig);
     fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`, {method: 'POST', body: fd, mode: 'no-cors', keepalive: true}).catch(() => {}); } catch (err) {} }
   render(); $('#rep')?.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'});
 }
