@@ -176,7 +176,9 @@ canvas#card{width:100%;aspect-ratio:9/16;border-radius:24px;display:block;box-sh
 .g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
 .locked{filter:blur(10px);pointer-events:none;user-select:none;opacity:.8}
 .fine{font-size:13px;color:var(--soft)}
+.bento.hb{grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)}
 @media(max-width:980px){.bento,.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.bento.hb{grid-template-columns:1fr}}
 @media(max-width:860px){.split{grid-template-columns:1fr}.side{display:none}.bar{display:flex}.intro{grid-template-columns:1fr}.share{grid-template-columns:1fr}.share canvas{max-width:280px;margin:0 auto}}
 @media(max-width:560px){body{padding:0}.app{border-radius:0;min-height:100vh}.bento{grid-template-columns:1fr}.s2{grid-column:auto}.g2{grid-template-columns:1fr}.nav button#next{flex:1}.opts{grid-template-columns:repeat(2,minmax(0,1fr))}.opts.list{grid-template-columns:1fr}.hrow{grid-template-columns:minmax(0,1fr) 80px}.hook{flex-direction:column;align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.prog i{transition:none}}
@@ -408,7 +410,7 @@ function report(c) {
   <div class="stages">${stages.map(([n, d, k, s], i) => `<div class="stage${i === leakIdx ? ' leak' : ''}"><span class="no">${i + 1}. ${n}</span><small>${d}</small><span class="k" style="font-size:clamp(24px,3vw,30px)">${k[0]}</span><small class="by">${s}</small></div>`).join('')}</div>
   <div class="leakbox"><i>!</i><div><strong style="font-family:Inter,sans-serif;font-size:17px">Your leak: ${LEAK[c.mode][0]}</strong><br>${LEAK[c.mode][1]}</div></div></div>
   <div class="sec" id="health"><h2>Your content health</h2><p class="sub">From your content check, weakest first</p>
-    <div class="bento" style="grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)">
+    <div class="bento hb">
       <div class="t olive"><small>Content health score</small><div class="score"><b>${c.health}</b><span>/ 12</span></div><small>${c.health >= 10 ? 'Strong foundations, now it\'s about strategy' : c.health >= 6 ? 'Some solid bits, a few gaps holding you back' : 'Plenty of room to grow, which is exciting'}</small></div>
       <div class="health">${CHECK.map((ch, i) => [ch, c.scores[i], i]).sort((a, b) => a[1] - b[1]).map(([[mod, m, q, os], s]) => `<div class="hrow"><span><b>${mod}</b><small>${os[s]}</small></span><span class="segs lv${s + 1}"><i></i><i></i><i></i></span></div>`).join('')}</div></div></div>
   <div class="sec" id="plan"><h2>Your 2027 focus: <em>${FOCUS[c.mode]}</em></h2><p class="sub">Your ${c.P} posts a week, split with my FAN Content Engine to plug your leak</p>
