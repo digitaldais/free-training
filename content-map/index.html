@@ -325,8 +325,8 @@ Q.offers = () => `<h2>What are you selling in <em>2027</em>?</h2>
 
 Q.platforms = () => `<h2>Who do you help, and where do they find you?</h2>
   <p class="sub">I'll use this to write you some starter hooks at the end</p>
-  <div class="g2"><div><label class="f" for="who">Who do you help?</label><input id="who" type="text" maxlength="40" data-b="who" value="${esc(S.who)}"><p class="hint">Keep it short and plural, like female coaches or busy mums</p></div>
-  <div><label class="f" for="want">Finish the sentence: they want...</label><input id="want" type="text" maxlength="60" data-b="want" value="${esc(S.want)}"><p class="hint">Like more clients from Instagram or to feel confident on camera</p></div></div>
+  <div class="g2"><div><label class="f" for="who">Who do you help?</label><input id="who" type="text" maxlength="40" data-b="who" value="${esc(S.who)}"><p class="hint">Keep it short, for example female coaches or busy mums</p></div>
+  <div><label class="f" for="want">What do they want most?</label><input id="want" type="text" maxlength="60" data-b="want" value="${esc(S.want)}"><p class="hint">Finish the sentence "they want...", for example more clients from Instagram</p></div></div>
   <label class="f">Where are you active?</label>
   <div class="opts tiles">${CH.map(([k, t, , ic]) => `<button class="opt${S.ch[k]?.on ? ' on' : ''}" data-act="ch" data-k="${k}" aria-pressed="${!!S.ch[k]?.on}"><span class="ic">${ico(P[ic])}</span><span>${t}</span><span class="tick">✓</span></button>`).join('')}</div>
   ${CH.filter(([k]) => S.ch[k]?.on).map(([k, t, u]) => `<label class="f" for="cs${k}">${t} ${u}</label><input id="cs${k}" type="text" inputmode="numeric" data-b="ch.${k}.size" value="${esc(S.ch[k].size)}">`).join('')}
