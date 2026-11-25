@@ -432,11 +432,11 @@ function report(c) {
   <div class="sec share"><canvas id="card" width="1080" height="1920" aria-label="Your 2027 Content Map story card"></canvas>
     <div><h2>Save your <em>Content Map</em></h2><p class="sub">Pop it on your stories so you're accountable all year, and tag me <strong>@digital.dais</strong> so I can cheer you on</p>
     <button data-act="savecard">Save my story card</button><p class="fine">Not downloading? Just screenshot it</p></div></div>
-  <div class="sec biz" id="biz"><h2>Content is how you get there, <em>Bizfluencer™ is how you get it right</em></h2>
-    <p>Your leak is ${LEAK[c.mode][0]}, and your weakest areas are literally modules inside Bizfluencer™, my 12-week programme where we nail your personal brand and build an Instagram content strategy that turns followers into clients, with live group calls and content check-ins with me along the way</p>
+  <div class="sec biz" id="biz"><h2>Content is how you get there, <em>BIZFLUENCER™ is how you get it right</em></h2>
+    <p>Your leak is ${LEAK[c.mode][0]}, and your weakest areas are literally modules inside BIZFLUENCER™, my 12-week programme where we nail your personal brand and build an Instagram content strategy that turns followers into clients, with live group calls and content check-ins with me along the way</p>
     ${c.weak.length ? `<div class="mods">${c.weak.map(w => `<div><span><b>${w.c[1]}</b> ${w.c[0]}</span><span style="opacity:.8">${w.c[3][w.s]}</span></div>`).join('')}</div>` : '<p>Your foundations are strong, so we\'d go straight into turning them into a content strategy that sells</p>'}
     ${xmas ? `<div class="count"><b>${freeLabel()} free</b><span>Join today and you get full access straight away, but your 12 weeks of support don't start counting until Tue 5 Jan, and you're covered until 13th April 2027. The sooner you join, the more free time you get</span></div>` : ''}
-    <a class="btn" href="${SALES}" target="_blank" rel="noopener">Show me Bizfluencer™ ${ico(P.arrow, 18)}</a>
+    <a class="btn" href="${SALES}" target="_blank" rel="noopener">Show me BIZFLUENCER™ ${ico(P.arrow, 18)}</a>
     <p style="margin-top:12px;opacity:.85;font-size:14px">Payment plans available${xmas ? ', Christmas offer ends Fri 18 Dec at 6pm' : ''}</p></div>
   <p style="text-align:center;margin-top:24px"><button class="link" data-act="restart">Start a new Content Map</button></p>`;
 }
