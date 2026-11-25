@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your 2027 Content Map</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,500;0,700;0,800;0,900;1,800;1,900&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* VOICE: warm, cheeky coach in a calm, soft app, hand-holding at every step
+   IDEA: a polished mobile app quiz that turns a money goal into a content plan, ending in a bento dashboard
+   PICTURE: tappable option cards, sidebar stepper, the 4C journey with the leak highlighted, colour-block FAN cards
+   COLOUR and TYPE: Digital Dais brand - sage page, cream app, white cards, olive buttons, blush and dusty rose blocks; Inter 800/900 heads, DM Sans body
+   LAYOUT: rounded app shell on sage; desktop splits stepper and question, mobile is a phone screen with a top progress bar */
+:root{color-scheme:light dark;
+--page:light-dark(#c1c9aa,#1c1e14);--app:light-dark(#f4efe8,#23251a);--card:light-dark(#ffffff,#2f3223);--tint:light-dark(#ede7df,#383b2a);
+--ink:light-dark(#4b4626,#f4efe8);--soft:light-dark(rgba(75,70,38,.66),rgba(244,239,232,.68));--olive:light-dark(#6a7148,#b4bd92);
+--btn:light-dark(#4e5235,#c1c9aa);--onbtn:light-dark(#f4efe8,#1c1e14);--line:light-dark(#e3dbd0,#46493a);
+--blush:#eecfc7;--rose:#ce998a;--sage:#c1c9aa;--dark:#4b4626;--shadow:0 1px 2px rgba(75,70,38,.06),0 8px 24px rgba(75,70,38,.07)}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--page);color:var(--ink);font:16px/1.55 'DM Sans',system-ui,sans-serif;overflow-x:clip;padding:clamp(0px,3vw,40px)}
+h1,h2,h3{font-family:Inter,system-ui,sans-serif;line-height:1.08;letter-spacing:-.02em;text-wrap:balance;margin:0}
+h1{font-size:clamp(34px,5vw,50px);font-weight:900}h1 em,h2 em{font-style:italic;color:var(--olive)}
+h2{font-size:clamp(25px,3.4vw,32px);font-weight:800}h3{font-size:18px;font-weight:800}
+p{margin:.45em 0}
+.app{max-width:1120px;margin:0 auto;background:var(--app);border-radius:clamp(0px,3vw,34px);min-height:min(760px,100vh);overflow:hidden;box-shadow:0 30px 60px rgba(60,62,40,.18)}
+.split{display:grid;grid-template-columns:330px minmax(0,1fr);min-height:inherit}
+.side{background:var(--card);padding:36px 30px;border-right:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px;font-family:Inter,sans-serif;font-weight:800;color:var(--olive);margin-bottom:26px}
+.brand i{width:30px;height:30px;border-radius:50%;background:var(--blush);display:grid;place-items:center;font-style:normal;color:var(--dark);font-size:14px}
+.side h2{font-size:28px}.side>p{color:var(--soft);font-size:14px;margin-bottom:26px}
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:grid;grid-template-columns:26px minmax(0,1fr);gap:12px;padding-bottom:20px;position:relative}
+.steps li:not(:last-child)::before{content:"";position:absolute;left:12px;top:24px;bottom:-2px;width:2px;background:var(--line)}
+.steps li.done:not(:last-child)::before{background:var(--olive)}
+.dot{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);background:var(--card);display:grid;place-items:center;font-size:12px;color:var(--card);position:relative;z-index:1}
+.done .dot{background:var(--olive);border-color:var(--olive)}.now .dot{border-color:var(--olive);box-shadow:0 0 0 4px color-mix(in srgb,var(--olive) 22%,transparent)}
+.now .dot::after{content:"";width:10px;height:10px;border-radius:50%;background:var(--olive)}
+.steps b{display:block;font-size:15px}.steps span{font-size:13px;color:var(--soft)}
+.steps li:not(.now):not(.done) b{color:var(--soft)}
+.main{padding:clamp(22px,4vw,48px);display:flex;flex-direction:column}
+.bar{display:none;align-items:center;gap:14px;margin-bottom:22px}
+.circ{width:44px;height:44px;min-height:0;padding:0;border-radius:50%;border:1px solid var(--line);background:var(--card);display:grid;place-items:center;color:var(--ink);flex:none}
+.prog{flex:1;height:6px;border-radius:9px;background:var(--line);overflow:hidden}.prog i{display:block;height:100%;background:var(--olive);border-radius:9px;transition:width .4s}
+.qno{font-size:13px;font-weight:700;color:var(--olive);margin-bottom:6px}
+.sub{color:var(--soft);font-size:16px}
+.q{flex:1;max-width:640px}
+.hint{color:var(--soft);font-size:14px}
+label.f{display:block;font-weight:700;font-size:15px;margin:22px 0 8px}
+input[type=text],input[type=email]{width:100%;font:inherit;font-size:16px;padding:14px 16px;border:1px solid var(--line);border-radius:16px;background:var(--card);color:var(--ink);min-height:52px;box-shadow:var(--shadow)}
+input:focus-visible,button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid var(--olive);outline-offset:2px}
+.money{position:relative}.money span{position:absolute;left:16px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--soft)}.money input{padding-left:32px}
+.goal input{font-family:Inter,sans-serif;font-size:clamp(30px,5vw,42px);font-weight:900;letter-spacing:-.02em;padding:16px 18px 16px 50px;min-height:80px;border-radius:22px}
+.goal span{font-size:28px;left:22px;font-family:Inter,sans-serif}
+input[type=range]{width:100%;accent-color:var(--olive);height:44px}
+button,.btn{font:inherit;font-weight:700;font-size:16px;border:0;border-radius:999px;padding:13px 26px;min-height:50px;cursor:pointer;background:var(--btn);color:var(--onbtn);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+button:disabled{opacity:.35;cursor:not-allowed}
+.link{background:none;color:var(--olive);padding:8px 0;min-height:44px;font-size:15px;text-decoration:underline;text-underline-offset:4px}
+.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:34px;max-width:640px}
+.opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:12px}
+.opts.list{grid-template-columns:1fr}
+.opt{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:20px;padding:16px;min-height:64px;box-shadow:var(--shadow);text-align:left;display:flex;align-items:center;gap:12px;font-weight:600;justify-content:flex-start}
+.opt .ic{width:40px;height:40px;border-radius:14px;background:var(--tint);display:grid;place-items:center;flex:none;color:var(--olive);font-family:Inter,sans-serif;font-weight:800}
+.opt .ic svg{width:20px;height:20px}
+.opt small{display:block;font-weight:400;color:var(--soft);font-size:13px;line-height:1.35}
+.opt .tick{margin-left:auto;width:24px;height:24px;border-radius:50%;border:1.5px solid var(--line);flex:none;display:grid;place-items:center;font-size:13px;color:#fff}
+.opt.on{border-color:var(--olive);background:color-mix(in srgb,var(--olive) 9%,var(--card))}
+.opt.on .tick{background:var(--olive);border-color:var(--olive)}
+.opt.on .ic{background:var(--olive);color:var(--onbtn)}
+.opts.tiles .opt{flex-direction:column;align-items:flex-start;gap:10px;position:relative}.opts.tiles .tick{position:absolute;top:14px;right:14px}
+.nums{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.nums .opt{width:58px;height:58px;min-height:0;padding:0;justify-content:center;font-family:Inter,sans-serif;font-size:20px;font-weight:800}
+.nums .opt.on{background:var(--btn);color:var(--onbtn);border-color:var(--btn)}
+.panel{background:var(--card);border-radius:24px;padding:20px;margin-top:16px;box-shadow:var(--shadow)}
+.panel h3{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.stepper{display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:4px;width:max-content}
+.stepper button{width:42px;height:42px;min-height:0;padding:0;border-radius:50%;background:var(--tint);color:var(--ink);font-size:20px}
+.stepper b{min-width:44px;text-align:center;font-family:Inter,sans-serif;font-size:20px}
+.cap{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;background:var(--tint);border-radius:20px;padding:14px 16px;margin-top:14px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:4px 12px;font-weight:700;font-size:13px;white-space:nowrap;background:var(--tint);color:var(--ink)}
+.pill.ok{background:var(--sage);color:var(--dark)}.pill.no{background:var(--blush);color:#8a4a3c}
+details.help{margin-top:14px;background:var(--tint);border-radius:18px;padding:2px 16px}
+details.help summary{cursor:pointer;font-weight:700;font-size:15px;min-height:46px;display:flex;align-items:center;gap:8px;list-style:none}
+details.help summary::before{content:"?";width:22px;height:22px;border-radius:50%;background:var(--olive);color:var(--onbtn);display:grid;place-items:center;font-size:13px;flex:none}
+details.help p{font-size:15px;margin:0 0 14px}
+.note{background:var(--sage);color:var(--dark);border-radius:16px;padding:12px 16px;font-size:14px;margin-top:14px;display:flex;gap:12px;align-items:flex-start}
+.note i,.warn i{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.6);display:grid;place-items:center;font-style:normal;font-weight:900;flex:none}
+.warn.flex{display:flex;gap:12px;align-items:flex-start}
+.warn{background:var(--blush);color:#5c3329;border-radius:16px;padding:12px 16px;font-size:14px;margin-top:12px}.warn:empty{display:none}
+.intro{padding:clamp(28px,6vw,72px) clamp(22px,4vw,48px);max-width:720px;margin:0 auto;min-height:min(760px,100vh);display:flex;flex-direction:column;justify-content:center}
+.heroc{background:var(--olive);color:#f4efe8;border-radius:30px;padding:28px;position:relative;overflow:hidden;min-height:360px;display:flex;flex-direction:column;justify-content:flex-end;gap:10px}
+.heroc::before{content:"";position:absolute;width:260px;height:260px;border-radius:50%;background:var(--blush);top:-90px;right:-70px;opacity:.9}
+.heroc *{position:relative}
+.heroc .kpi{font-family:Inter,sans-serif;font-weight:900;font-style:italic;font-size:clamp(40px,6vw,56px);letter-spacing:-.03em;line-height:1}
+.minifan{display:grid;gap:8px;margin-top:6px}
+.minifan div{border-radius:16px;padding:10px 14px;color:var(--dark);display:flex;justify-content:space-between;font-weight:600;font-size:14px}
+.minifan b{font-family:Inter,sans-serif}
+.need{display:grid;gap:10px;margin:22px 0}
+.need div{display:flex;align-items:center;gap:12px;background:var(--card);border-radius:18px;padding:12px 14px;box-shadow:var(--shadow);font-weight:600;font-size:15px}
+.need i{width:34px;height:34px;border-radius:12px;background:var(--blush);display:grid;place-items:center;font-style:normal;color:var(--dark);flex:none}
+.journey{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:18px 0 6px}
+.journey span{padding:8px 14px;border-radius:999px;background:var(--tint);font-weight:700;font-size:14px}
+.journey span.leak{background:var(--rose);color:var(--dark)}
+.journey i{align-self:center;font-style:normal;color:var(--soft)}
+.dash{padding:clamp(18px,3.5vw,44px)}
+.dhead{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.tabs{display:flex;gap:6px;background:var(--card);border-radius:999px;padding:5px;overflow-x:auto;box-shadow:var(--shadow);margin-bottom:22px;scrollbar-width:none}
+.tabs a{flex:none;padding:10px 18px;border-radius:999px;color:var(--ink);text-decoration:none;font-weight:600;font-size:14px}
+.tabs a:first-child{background:var(--btn);color:var(--onbtn)}
+.reveal{background:var(--card);border-radius:30px;padding:clamp(24px,4vw,40px);text-align:center;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.reveal .big{font-family:Inter,sans-serif;font-weight:900;font-style:italic;font-size:clamp(48px,9vw,80px);letter-spacing:-.04em;line-height:1;color:var(--olive);margin:8px 0}
+.conf{position:absolute;border-radius:50%}
+.stages{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.stage{background:var(--card);border-radius:24px;padding:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:6px;position:relative}
+.stage.leak{background:var(--blush);color:var(--dark)}
+.stage .no{font-family:Inter,sans-serif;font-size:13px;font-weight:800;color:var(--olive)}
+.stage.leak .no{color:#8a4a3c}
+.stage h3{font-size:20px}
+.stage .k{font-family:Inter,sans-serif;font-weight:900;font-size:clamp(30px,4vw,40px);letter-spacing:-.03em;line-height:1.05;white-space:nowrap}
+.stage small{font-size:13px;color:var(--soft)}.stage.leak small{color:rgba(75,70,38,.75)}
+.stage .by{margin-top:auto;padding-top:8px}
+.leakbox{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;background:var(--rose);color:var(--dark);border-radius:24px;padding:18px 20px;margin-top:12px}
+.leakbox i{width:44px;height:44px;border-radius:14px;background:rgba(255,255,255,.55);display:grid;place-items:center;font-style:normal;font-weight:900}
+.health{background:var(--card);border-radius:26px;padding:8px 20px;box-shadow:var(--shadow)}
+.hrow{display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.hrow:last-child{border:0}
+.hrow b{display:block;font-size:15px}.hrow small{color:var(--soft);font-size:13px}
+.segs{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.segs i{height:10px;border-radius:9px;background:var(--line)}
+.segs.lv2 i:nth-child(-n+2),.segs.lv3 i{background:var(--olive)}
+.segs.lv1 i:nth-child(1){background:var(--rose)}
+.score{display:flex;align-items:baseline;gap:8px;font-family:Inter,sans-serif}.score b{font-size:48px;font-weight:900;letter-spacing:-.03em}
+.bento{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.t{background:var(--card);border-radius:26px;padding:20px;box-shadow:var(--shadow)}
+.t .k{font-family:Inter,sans-serif;font-weight:900;font-size:clamp(32px,4vw,42px);letter-spacing:-.03em;line-height:1.05;white-space:nowrap}
+.t small{color:var(--soft);font-size:14px}
+.t.olive{background:var(--olive);color:#f4efe8}.t.olive small{color:rgba(244,239,232,.78)}
+.t.blush{background:var(--blush);color:var(--dark)}.t.sage{background:var(--sage);color:var(--dark)}.t.rose{background:var(--rose);color:var(--dark)}
+.t.blush small,.t.sage small,.t.rose small{color:rgba(75,70,38,.72)}
+.s2{grid-column:span 2}
+.sec{margin-top:34px;scroll-margin-top:20px}.sec>h2{margin-bottom:4px}.sec>.sub{margin-bottom:14px}
+.fan{display:grid;gap:10px}
+.fc{border-radius:24px;padding:18px 20px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:16px;align-items:center;color:var(--dark)}
+.fc .n{font-family:Inter,sans-serif;font-weight:900;font-size:44px;letter-spacing:-.03em;line-height:1;width:52px;text-align:center}
+.fc b{font-family:Inter,sans-serif;font-size:19px;font-weight:800}.fc small{display:block;font-size:14px;opacity:.85}
+.nudge{display:flex;gap:12px;align-items:center;background:var(--card);border:1.5px dashed var(--olive);border-radius:20px;padding:14px 18px;margin-top:10px;font-size:15px}
+.hooks{display:grid;gap:10px}
+.hook{background:var(--card);border-radius:20px;padding:16px 18px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center;gap:12px}
+.hook p:focus{background:var(--tint)}
+.hook p{margin:0;flex:1;outline:none;border-radius:8px;padding:2px 4px;cursor:text;font-family:Inter,sans-serif;font-weight:700;font-size:17px;letter-spacing:-.01em}
+.hook button{min-height:44px;padding:8px 16px;font-size:14px;flex:none}
+.sched{display:grid;gap:10px}
+.srow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 14px;border-radius:18px;background:var(--tint);border-left:4px solid var(--olive)}
+.srow:nth-child(2){border-left-color:var(--rose)}.srow:nth-child(3){border-left-color:var(--sage)}
+.srow b{font-size:15px}.srow small{display:block;color:var(--soft);font-size:13px}
+.flag{display:grid;grid-template-columns:40px minmax(0,1fr);gap:14px;background:var(--card);border-radius:22px;padding:16px 18px;margin-top:10px;box-shadow:var(--shadow)}
+.flag i{width:40px;height:40px;border-radius:14px;background:var(--blush);display:grid;place-items:center;font-style:normal;font-weight:900;color:#8a4a3c}
+.flag strong{display:block;font-family:Inter,sans-serif;font-size:16px}.flag span{font-size:15px;color:var(--soft)}
+.rh{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rh .t{display:flex;gap:14px;align-items:center}.rh .t b{font-family:Inter,sans-serif;font-weight:900;font-size:28px;width:56px;height:56px;border-radius:18px;background:var(--tint);display:grid;place-items:center;flex:none;color:var(--olive)}
+.share{display:grid;grid-template-columns:minmax(0,280px) minmax(0,1fr);gap:24px;align-items:center}
+canvas#card{width:100%;aspect-ratio:9/16;border-radius:24px;display:block;box-shadow:0 20px 40px rgba(75,70,38,.18)}
+.biz{background:#4e5235;color:#f4efe8;border-radius:30px;padding:clamp(24px,4vw,40px);position:relative;overflow:hidden}
+.biz::after{content:"";position:absolute;width:240px;height:240px;border-radius:50%;background:var(--rose);opacity:.35;right:-70px;bottom:-90px}
+.biz *{position:relative;z-index:1}.biz h2{color:#f4efe8}.biz h2 em{color:var(--blush)}
+.mods{display:grid;gap:8px;margin:16px 0}
+.mods div{background:rgba(244,239,232,.1);border:1px solid rgba(238,207,199,.25);border-radius:16px;padding:12px 16px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mods b{color:var(--blush)}
+.count{background:var(--blush);color:var(--dark);border-radius:22px;padding:16px 20px;margin:18px 0;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.count b{font-family:Inter,sans-serif;font-weight:900;font-size:40px;letter-spacing:-.03em;line-height:1;white-space:nowrap}
+.biz .btn{background:var(--blush);color:var(--dark)}
+.gate{background:var(--card);border-radius:28px;padding:clamp(22px,4vw,36px);box-shadow:var(--shadow);margin-top:16px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px}
+.locked{filter:blur(10px);pointer-events:none;user-select:none;opacity:.8}
+.fine{font-size:13px;color:var(--soft)}
+@media(max-width:980px){.bento,.stages{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:860px){.split{grid-template-columns:1fr}.side{display:none}.bar{display:flex}.intro{grid-template-columns:1fr}.share{grid-template-columns:1fr}.share canvas{max-width:280px;margin:0 auto}}
+@media(max-width:560px){body{padding:0}.app{border-radius:0;min-height:100vh}.bento{grid-template-columns:1fr}.s2{grid-column:auto}.g2{grid-template-columns:1fr}.nav button#next{flex:1}.opts{grid-template-columns:repeat(2,minmax(0,1fr))}.opts.list{grid-template-columns:1fr}.hrow{grid-template-columns:minmax(0,1fr) 80px}.hook{flex-direction:column;align-items:flex-start}}
+@media(prefers-reduced-motion:reduce){.prog i{transition:none}}
+</style>
+</head>
+<body>
+<div class="app" id="stage"></div>
+<script>
+{
+/* ===== SETTINGS - edit these =====
+   KIT_FORM_ID: create a form in Kit for this lead magnet and paste its number here (from the form's URL).
+   Leave it blank and the report still unlocks, it just won't add anyone to your list.
+   Admin preview: add #admin-preview to the end of the link to see an unlocked report with sample answers. */
+const KIT_FORM_ID = '10239623'; // Kit form: 2027 Content Map
+const SALES = 'https://join.digitaldais.co.uk';
+const OFFER_END = new Date('2026-12-18T18:00:00Z'); // Fri 18 Dec 2026, 6pm UK, same as the sales page
+/* Free time until Tue 5 Jan, counted in days on UK time, written the same way as the sales page (e.g. 5 weeks 6 days) */
+function freeLabel() {
+  let t; try { t = new Date().toLocaleDateString('en-CA', {timeZone: 'Europe/London'}); } catch (e) { t = null; }
+  const p = t && /^\d{4}-\d{2}-\d{2}$/.test(t) ? t.split('-').map(Number) : null, now = new Date();
+  const today = p ? Date.UTC(p[0], p[1] - 1, p[2]) : Date.UTC(now.getFullYear(), now.getMonth(), now.getDate());
+  const days = Math.max(0, Math.round((Date.UTC(2027, 0, 5) - today) / 864e5)), w = Math.floor(days / 7), d = days % 7, out = [];
+  if (w > 0) out.push(w + (w === 1 ? ' week' : ' weeks'));
+  if (d > 0 || w === 0) out.push(d + (d === 1 ? ' day' : ' days'));
+  return out.join(' ');
+}
+const PROG_START = new Date('2027-01-05T09:00:00Z');
+
+const $ = s => document.querySelector(s);
+const esc = v => String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const num = v => { const n = parseFloat(String(v ?? '').replace(/[^0-9.]/g, '')); return isFinite(n) ? n : 0; };
+const money = n => n >= 10000 ? '£' + (Math.round(n / 100) / 10).toString().replace(/\.0$/, '') + 'k' : '£' + Math.round(n);
+const r1 = n => (Math.round(n * 10) / 10).toString();
+const up = n => Math.max(0, Math.ceil(n - 1e-9));
+const big = n => n >= 10000 ? (Math.round(n / 100) / 10).toString().replace(/\.0$/, '') + 'k' : String(Math.round(n));
+const help = (t, b) => `<details class="help"><summary>${t}</summary><p>${b}</p></details>`;
+const ico = (d, s = 20) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const P = {
+  insta:'<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/>',
+  mail:'<rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/>',
+  tiktok:'<path d="M14 3v11a4 4 0 1 1-4-4"/><path d="M14 3c1 3 3 4 6 4"/>',
+  linkedin:'<rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 11v6M8 7.5v.01M12 17v-6M12 13.5c0-1.5 1-2.5 2.3-2.5S16 12 16 13.5V17"/>',
+  facebook:'<rect x="3" y="3" width="18" height="18" rx="5"/><path d="M15 8h-1.5A1.5 1.5 0 0 0 12 9.5V21M9.5 13h5"/>',
+  youtube:'<rect x="2.5" y="5" width="19" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/>',
+  tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8" r="1.2"/>',
+  loop:'<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M20 4v5h-5M4 20v-5h5"/>',
+  arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>', back:'<path d="M19 12H5M11 6l-6 6 6 6"/>'
+};
+const CH = [['instagram','Instagram','followers','insta'],['email','Email list','subscribers','mail'],['tiktok','TikTok','followers','tiktok'],['linkedin','LinkedIn','connections','linkedin'],['facebook','Facebook','followers or group members','facebook'],['youtube','YouTube','subscribers','youtube']];
+const FOCUS = {find:'Get seen', align:'Build your brand', need:'Sell without the ick'};
+const LEAK = {
+  find:['Cold to Curious', 'Not enough of the right people know you exist yet, so your content needs to reach way beyond your current followers'],
+  align:['Curious to Connected', 'People see you, but they don\'t feel like they know you yet, so they scroll past instead of enquiring'],
+  need:['Connected to Client', 'People like you, now your content needs to make it obvious why working with you is a no-brainer']};
+const CHECK = [
+  ['Ditch Instagram Anxiety', 'Pre-work', 'How do you feel about showing up and sharing yourself online?', ['I keep the focus on my work, I don\'t really share much of me', 'I share bits of me, but I overthink what to say and how it\'ll come across', 'I\'m comfy being me online, that\'s the easy bit']],
+  ['Uncover Your Personal Brand', 'Module 1', 'Could a stranger tell what you\'re known for after 10 seconds on your profile?', ['Honestly no, my profile could belong to anyone in my industry', 'They\'d get what I do, but not why they should pick me', 'Yes, I\'m known for something specific and it\'s obvious'], 'Be really honest with yourself here. Picture someone who\'s never heard of you landing on your profile. Would they know what you do, who it\'s for and why you over anyone else, within 10 seconds? If you have to think about it, that\'s usually your answer'],
+  ['Build Your Content Strategy', 'Module 2', 'How do you decide what to post?', ['I post when inspiration strikes, it\'s more spontaneous than planned', 'I\'ve got ideas and a rough plan, but no real reason behind each post', 'Every post has a job, I know exactly why it\'s going out']],
+  ['Write Banging Hooks', 'Module 3', 'What usually happens when you post?', ['It tends to be the same people seeing and engaging each time', 'The odd post takes off, but I couldn\'t tell you why', 'My reach is consistent and I know what makes people stop']],
+  ['Speak Your Clients Language', 'Module 4', 'When you sit down to write a caption, how well do you know what\'s going on in your ideal client\'s head?', ['I haven\'t really thought about that, I just write what I think sounds good', 'I know who they are, but I struggle to put their thoughts into words', 'I could finish their sentences, I use their exact words']],
+  ['Avoid Content Burnout', 'Module 5', 'What happens to your content when you get busy with clients?', ['Clients come first, so my content takes a back seat for a while', 'I keep going, but it\'s rushed and I\'m running on fumes', 'It barely changes, I\'ve got systems and content ready to go']]];
+const CLOSE = [[1.5,'1 or 2 in 10','Lots of browsers, not many buyers'],[3,'3 in 10','The most common, pick this if you\'re guessing'],[4.5,'4 or 5 in 10','People usually come to you ready to buy'],[6.5,'6 or more in 10','Rare, double check you\'re counting everyone']];
+const closeTxt = v => (CLOSE.find(c => c[0] === v) || [0, v + ' in 10'])[1];
+const SCREENS = ['intro','goal','offers','platforms','warmth','c0','c1','c2','c3','c4','c5','posts','results'];
+const GROUPS = [['Your goal','What 2027 needs to bring in',['goal']],['Your offers','What you\'re selling',['offers']],['Your audience','Who you help and where',['platforms']],['Your warmth','How many people enquire',['warmth']],['Your content check','6 quick taps',['c0','c1','c2','c3','c4','c5']],['Your posting','What you can keep up',['posts']]];
+const fresh = () => ({step:0, goal:'', last:'', costs:'', pay:'', tax:true, ui:{b:false,p:false},
+  offers:[{name:'',price:'',type:'one',stay:6,share:100,cap:4}], months:11, who:'', want:'',
+  ch:{instagram:{on:true,size:''}}, refs:'', enq:'', dunno:false, close:3, cc:[null,null,null,null,null,null], posts:3, fname:'', email:'', unlocked:false});
+const PREVIEW = location.hash === '#admin-preview';
+let S; try { S = JSON.parse(localStorage.getItem('cm27')); } catch (e) {}
+if (!S || !Array.isArray(S.cc)) S = fresh();
+if (PREVIEW) S = Object.assign(fresh(), {step:12, unlocked:true, fname:'Daisy', goal:'60000', last:'25000', who:'female coaches', want:'a fully booked 2027',
+  offers:[{name:'1:1 coaching',price:'1500',type:'one',stay:6,share:65,cap:4},{name:'Group programme',price:'497',type:'one',stay:6,share:35,cap:10}],
+  ch:{instagram:{on:true,size:'2400'},email:{on:true,size:'300'}}, refs:'3', enq:'3', close:3, cc:[1,0,0,1,1,2], posts:4});
+const save = () => { if (PREVIEW) return; try { localStorage.setItem('cm27', JSON.stringify(S)); } catch (e) {} };
+const getP = p => p.split('.').reduce((o, k) => o?.[k], S);
+const setP = (path, v) => { const k = path.split('.'); let o = S; while (k.length > 1) o = o[k.shift()]; o[k[0]] = v; };
+const built = () => (num(S.costs) + num(S.pay) * (S.tax ? 1.25 : 1)) * 12;
+const scr = () => SCREENS[S.step];
+const opt = (k, v, title, small, icon, isNum) => `<button class="opt${getP(k) == v ? ' on' : ''}" data-act="set" data-k="${k}" data-v="${v}"${isNum ? ' data-num' : ''} aria-pressed="${getP(k) == v}">${icon ? `<span class="ic">${icon}</span>` : ''}<span>${title}${small ? `<small>${small}</small>` : ''}</span><span class="tick">✓</span></button>`;
+const stepper = (k, min, max) => `<div class="stepper"><button data-act="inc" data-k="${k}" data-d="-1" data-min="${min}" data-max="${max}" aria-label="Less">−</button><b>${getP(k)}</b><button data-act="inc" data-k="${k}" data-d="1" data-min="${min}" data-max="${max}" aria-label="More">+</button></div>`;
+const cap1 = t => t.charAt(0).toUpperCase() + t.slice(1);
+
+function calc() {
+  const G = num(S.goal), months = S.months;
+  const offs = S.offers.filter(o => num(o.price) > 0);
+  const tot = offs.reduce((a, o) => a + num(o.share), 0) || 1;
+  const rows = offs.map(o => { const v = num(o.price) * (o.type === 'mon' ? Math.max(1, num(o.stay)) : 1); const sh = num(o.share) / tot; const yr = G * sh / v;
+    return {o, name: o.name || 'Your offer', v, sh, yr, mo: yr / months, cap: num(o.cap)}; });
+  const clientsYr = rows.reduce((a, r) => a + r.yr, 0);
+  const refs = Math.min(num(S.refs), clientsYr), contentMo = (clientsYr - refs) / months;
+  const E = contentMo / (S.close / 10);
+  const eLo = contentMo / Math.min(.9, (S.close + 1) / 10), eHi = contentMo / Math.max(.1, (S.close - 1) / 10);
+  const A = CH.reduce((a, [k]) => a + (S.ch[k]?.on ? num(S.ch[k].size) : 0), 0);
+  const e0 = S.dunno ? 0 : num(S.enq), gap = e0 > 0 ? E / e0 : null;
+  const sc = i => S.cc[i] ?? 1, closeSc = S.close <= 1.5 ? 0 : S.close >= 4.5 ? 2 : 1;
+  const tr = {find: (sc(0) + sc(3)) / 2 - (A > 0 && A < 1000 ? .5 : 0), align: (sc(1) + sc(4)) / 2 - (gap && gap > 2 ? .5 : 0), need: (sc(2) + closeSc) / 2};
+  const mode = ['find', 'align', 'need'].reduce((m, k) => tr[k] < tr[m] ? k : m, 'find');
+  const mix = {find:[.5,.3,.2], align:[.25,.5,.25], need:[.25,.3,.45]}[mode];
+  const Pn = S.posts, raw = mix.map(m => m * Pn), fan = raw.map(Math.floor);
+  const left = Pn - fan.reduce((a, b) => a + b, 0);
+  raw.map((x, i) => [x - fan[i], i]).sort((a, b) => b[0] - a[0]).slice(0, left).forEach(([, i]) => fan[i]++);
+  const scores = S.cc.map(v => v ?? 1), health = scores.reduce((a, b) => a + b, 0);
+  const weak = CHECK.map((c, i) => ({c, s: scores[i], i})).filter(x => x.s < 2).sort((a, b) => a.s - b.s || a.i - b.i).slice(0, 3);
+  return {G, months, rows, clientsYr, refs, cMo: clientsYr / months, contentMo, E, eLo, eHi, A, e0, gap, tr, mode, fan, P: Pn, scores, health, weak};
+}
+
+function flags(c) {
+  const f = [], last = num(S.last);
+  if (last > 0 && c.G > last * 3) f.push(['Big jump alert', `${money(c.G)} is ${r1(c.G / last)}x your 2026. Not impossible at all, but your content has to work way harder than it does now`]);
+  c.rows.forEach(r => { if (r.cap > 0 && up(r.mo) > r.cap) f.push([`${esc(r.name)} is over capacity`, `You'd need ${up(r.mo)} new clients a month and you said you can handle ${r.cap}. Something's gotta give - a higher price, a group version, or shifting more of your income to another offer`]); });
+  if (S.close >= 6) f.push(['Your close rate is super high', `${closeTxt(S.close)} is amazing if it's true, just double check you're counting everyone who asked. If it's lower, you'll need more enquiries than this plan shows`]);
+  return f;
+}
+
+const Q = {};
+Q.goal = () => `<h2>What do you want to bring in during <em>2027</em>?</h2>
+  <p class="sub">Your total for the year, before costs and tax. This is the only money bit, promise, then we get onto your content</p>
+  <div class="money goal" style="margin-top:18px"><span>£</span><input type="text" inputmode="numeric" data-b="goal" value="${esc(S.goal)}" aria-label="2027 income goal"></div>
+  <p class="hint">Pick a number that means something. Work out what your biz costs to run, then what you want to pay yourself each month for bills and fun money. That's your real number, way better than a random round one</p>
+  <div style="display:flex;gap:18px;flex-wrap:wrap"><button class="link" data-act="ui" data-k="b">${S.ui.b ? 'Hide the calculator' : 'Help me work it out'}</button><button class="link" data-act="ui" data-k="p">${S.ui.p ? 'Hide quick picks' : 'Just show me some quick picks'}</button></div>
+  ${S.ui.b ? `<div class="panel"><div class="g2">
+    <div><label class="f" for="c1" style="margin-top:0">Business costs a month</label><div class="money"><span>£</span><input id="c1" type="text" inputmode="numeric" data-b="costs" value="${esc(S.costs)}"></div></div>
+    <div><label class="f" for="c2" style="margin-top:0">What you want to pay yourself a month</label><div class="money"><span>£</span><input id="c2" type="text" inputmode="numeric" data-b="pay" value="${esc(S.pay)}"></div></div></div>
+    ${help('What counts as business costs?', 'Software and subscriptions, your phone, a VA or OBM, ads, courses and coaching, equipment, your accountant, insurance. Have a scroll through last month\'s business bank statement and add it all up')}
+    <div class="opts list" style="margin-top:14px"><button class="opt${S.tax ? ' on' : ''}" data-act="toggle" data-k="tax"><span class="ic">%</span><span>Add a rough tax pot on my pay (25%)<small>So your pay is actually yours to spend, check the real figure with your accountant</small></span><span class="tick">✓</span></button></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px"><span>That's <strong id="built" style="font-family:Inter,sans-serif;font-size:22px"></strong> a year</span><button data-act="usebuilt">Use this number</button></div></div>` : ''}
+  ${S.ui.p ? `<div class="opts">${[[30000,'Steady'],[50000,'Growing'],[75000,'Big year'],[100000,'Six figures']].map(([v, t]) => opt('goal', v, money(v), t)).join('')}</div>` : ''}
+  <label class="f" for="last">Roughly what did you bring in during 2026? <span class="hint" style="font-weight:400">optional, helps me sanity check</span></label>
+  <div class="money"><span>£</span><input id="last" type="text" inputmode="numeric" data-b="last" value="${esc(S.last)}"></div>
+  <div class="warn" id="w1"></div>`;
+
+Q.offers = () => `<h2>What are you selling in <em>2027</em>?</h2>
+  <p class="sub">Add up to 3 offers so I know how many clients your content needs to bring in</p>
+  ${S.offers.map((o, i) => `<div class="panel"><h3>Offer ${i + 1}${S.offers.length > 1 ? `<button class="link" data-act="rm" data-i="${i}">Remove</button>` : ''}</h3>
+    <label class="f" for="on${i}">Name</label><input id="on${i}" type="text" data-b="offers.${i}.name" value="${esc(o.name)}">
+    <div class="opts" style="grid-template-columns:repeat(2,minmax(0,1fr))">${opt(`offers.${i}.type`, 'one', 'One price', 'Package or one-off', ico(P.tag))}${opt(`offers.${i}.type`, 'mon', 'Monthly', 'Retainer or membership', ico(P.loop))}</div>
+    <label class="f" for="op${i}">${o.type === 'mon' ? 'Price per month' : 'Price'}</label><div class="money"><span>£</span><input id="op${i}" type="text" inputmode="numeric" data-b="offers.${i}.price" value="${esc(o.price)}"></div>
+    ${o.type === 'mon' ? `<div class="cap"><b>How many months do clients usually stay?</b>${stepper(`offers.${i}.stay`, 1, 36)}</div>` : ''}
+    ${S.offers.length > 1 ? `<label class="f" for="oh${i}">How much of your 2027 income should come from this? <span class="pill" id="sh${i}"></span></label><input id="oh${i}" type="range" min="0" max="100" step="5" data-b="offers.${i}.share" value="${o.share}">` : ''}
+    <div class="cap"><span><b>Max new clients you can take on a month</b><span class="hint" id="cp${i}" style="display:block"></span></span>${stepper(`offers.${i}.cap`, 1, 60)}</div></div>`).join('')}
+  ${S.offers.length < 3 ? '<button class="ghost" data-act="add" style="margin-top:14px">+ Add another offer</button>' : ''}
+  ${help('How do I work out my capacity?', 'Be honest, not hopeful. Think about your admin, your calls, your energy, school runs, holidays and your sanity. 1:1 offers are usually 2 to 6 new clients a month, group or digital offers can go much bigger')}
+  <label class="f">How many months will you actually be selling in 2027?</label>
+  <div class="opts">${[[9,'Lots of time off'],[10,'A few big breaks'],[11,'Most popular'],[12,'No breaks at all']].map(([v, t]) => opt('months', v, v + ' months', t, '', true)).join('')}</div>`;
+
+Q.platforms = () => `<h2>Who do you help, and where do they find you?</h2>
+  <p class="sub">I'll use this to write you some starter hooks at the end</p>
+  <div class="g2"><div><label class="f" for="who">Who do you help?</label><input id="who" type="text" maxlength="40" data-b="who" value="${esc(S.who)}"><p class="hint">Keep it short and plural, like female coaches or busy mums</p></div>
+  <div><label class="f" for="want">Finish the sentence: they want...</label><input id="want" type="text" maxlength="60" data-b="want" value="${esc(S.want)}"><p class="hint">Like more clients from Instagram or to feel confident on camera</p></div></div>
+  <label class="f">Where are you active?</label>
+  <div class="opts tiles">${CH.map(([k, t, , ic]) => `<button class="opt${S.ch[k]?.on ? ' on' : ''}" data-act="ch" data-k="${k}" aria-pressed="${!!S.ch[k]?.on}"><span class="ic">${ico(P[ic])}</span><span>${t}</span><span class="tick">✓</span></button>`).join('')}</div>
+  ${CH.filter(([k]) => S.ch[k]?.on).map(([k, t, u]) => `<label class="f" for="cs${k}">${t} ${u}</label><input id="cs${k}" type="text" inputmode="numeric" data-b="ch.${k}.size" value="${esc(S.ch[k].size)}">`).join('')}
+  ${help('Where do I find these?', 'Instagram, TikTok and YouTube: it\'s on your profile. Email: the total subscribers in Kit, Flodesk, Mailerlite or whatever you use. Round numbers are totally fine')}
+  <label class="f" for="refs">How many clients a year come from referrals, word of mouth or repeat clients?</label>
+  <input id="refs" type="text" inputmode="numeric" data-b="refs" value="${esc(S.refs)}">
+  <p class="hint">Your content doesn't need to find these ones, so I'll take them off. Not sure? Go low or leave it blank</p>`;
+
+Q.warmth = () => `<h2>How warm is your audience right now?</h2>
+  <p class="sub">This shows me where people are dropping off before they buy</p>
+  <label class="f" for="enq">How many people asked about working with you last month?</label>
+  <input id="enq" type="text" inputmode="numeric" data-b="enq" value="${esc(S.enq)}" ${S.dunno ? 'disabled' : ''}>
+  <div class="opts list" style="margin-top:10px"><button class="opt${S.dunno ? ' on' : ''}" data-act="toggle" data-k="dunno"><span>I honestly don't know<small>No stress, I'll work it out from your other answers</small></span><span class="tick">✓</span></button></div>
+  ${help('How to find it', 'Scroll back through last month\'s DMs, emails and call bookings and count everyone who asked about prices, availability or working together. Don\'t count freebie downloads, likes or "love this" comments, only people who were actually thinking about buying')}
+  <div class="warn" id="w5"></div>
+  <label class="f">Out of every 10 people who enquire, how many end up buying?</label>
+  <div class="opts list">${CLOSE.map(([v, t, s]) => opt('close', v, t, s, '', true)).join('')}</div>
+  ${help('How to find it', 'Look at your last 10 enquiries, how many paid? Most service providers sit around 2 to 4 out of 10, so if you\'re guessing stick with 3. Going too high makes your plan look easier than it is')}`;
+
+CHECK.forEach(([mod, , q, os, note], i) => { Q['c' + i] = () => `<div class="qno">Content check ${i + 1} of 6</div><h2>${q}</h2>
+  <p class="sub">Pick the one that sounds most like you right now, go with your gut</p>
+  ${note ? `<div class="note" style="margin-top:16px"><i>!</i><span>${note}</span></div>` : ''}
+  <div class="opts list" style="margin-top:20px">${os.map((t, v) => `<button class="opt${S.cc[i] === v ? ' on' : ''}" data-act="cc" data-i="${i}" data-v="${v}" aria-pressed="${S.cc[i] === v}"><span class="ic">${String.fromCharCode(65 + v)}</span><span>${t}</span><span class="tick">✓</span></button>`).join('')}</div>`; });
+
+Q.posts = () => `<h2>How much can you post?</h2>
+  <p class="sub">Last one, nearly there</p>
+  <label class="f">Feed posts a week you'll <em>actually</em> stick to in 2027</label>
+  <div class="nums">${[1,2,3,4,5,6,7].map(v => `<button class="opt${S.posts === v ? ' on' : ''}" data-act="set" data-k="posts" data-v="${v}" data-num aria-pressed="${S.posts === v}">${v}</button>`).join('')}</div>
+  ${postNote()}
+  ${help('Why realistic beats ambitious', '3 posts you actually post will do way more for you than 7 you ghost by February. Pick the number you could keep up in a busy client week, not your best ever week')}`;
+
+function postNote() {
+  const n = S.posts;
+  if (n <= 2) return `<div class="note"><i>✓</i><span>Love that you're being realistic, that's not a bad thing at all. Just know more posts means more chances to be seen, as long as each one has a job. If you can stretch to 3 or 4, your plan gets way stronger</span></div>`;
+  if (n >= 6) return `<div class="warn flex"><i>!</i><span>Careful of burnout here. ${n} a week alongside client work is a lot, and it's usually the first thing to slip when you get busy. 4 or 5 posts with the right strategy will beat ${n} rushed ones every time</span></div>`;
+  return '';
+}
+
+const intro = () => `<div class="intro">
+  <div><div class="brand"><i>D</i>Digital Dais</div>
+  <h1>Your 2027 <em>Content Map</em></h1>
+  <p class="sub" style="font-size:18px;margin-top:14px">For service providers who want 2027 to be the year it all clicks - pop in your goal and I'll show you where your audience is dropping off, what's holding your content back, and exactly what to post each week to get there</p>
+  <div class="need"><div><i>£</i>Your 2027 income goal and your prices</div><div><i>${ico(P.insta, 18)}</i>Your follower and email list numbers</div><div><i>${ico(P.mail, 18)}</i>How many people asked about working with you last month</div></div>
+  <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap"><button data-act="next">Map out my content ${ico(P.arrow, 18)}</button><span class="hint">About 5 minutes, I do all the maths</span></div></div>
+</div>`;
+
+function side() {
+  const s = scr();
+  const gi = GROUPS.findIndex(g => g[2].includes(s));
+  return `<aside class="side"><div class="brand"><i>D</i>Digital Dais</div><h2>Your 2027 <em>Content Map</em></h2><p>A few quick questions, then your full content plan</p>
+  <ol class="steps">${GROUPS.map(([t, d], i) => `<li class="${i < gi ? 'done' : i === gi ? 'now' : ''}"><span class="dot">${i < gi ? '✓' : ''}</span><span><b>${t}</b><span>${d}</span></span></li>`).join('')}</ol></aside>`;
+}
+
+function hooks() {
+  /* Tidies whatever people type so the hooks still read well: drops "I help", "a/an/the", "they want", trailing full stops and any year */
+  const clean = (t, lead) => t.trim().replace(/[.!?]+$/, '').replace(lead, '').replace(/\s+(in|by|for)\s+20\d\d\b/gi, '').replace(/\s+/g, ' ').trim();
+  let who = clean(S.who, /^((i\s+(help|work with|support)|my clients are)\s+)?((a|an|the)\s+)?/i);
+  const want = clean(S.want, /^(they\s+(want|need)\s+|(to\s+)?want\s+)/i);
+  if (who.length < 3 || want.length < 3) return [];
+  /* Makes the who plural so "who want" always reads right, e.g. nutritionist becomes nutritionists */
+  if (!/(s|women|men|people|children|staff|folk|folks)$/i.test(who)) who += /[^aeiou]y$/i.test(who) ? '' : 's';
+  if (/^[A-Z][a-z]/.test(who)) who = who.charAt(0).toLowerCase() + who.slice(1);
+  return [`${cap1(who)} who want ${want}, I'd stop doing this first`, `What nobody tells ${who} who want ${want}`, `The mistake I see ${who} who want ${want} make over and over`];
+}
+
+function report(c) {
+  const f = flags(c), nm = esc(S.fname), hk = hooks();
+  const xmas = new Date() <= OFFER_END;
+  const leakIdx = {find:0, align:1, need:2}[c.mode];
+  const st = (v, k) => k === c.mode ? (v >= 1.5 ? ['Could be smoother', 'mid'] : v >= .75 ? ['A bit stuck', 'mid'] : ['Leaking', 'no']) : v >= 1.5 ? ['Flowing', 'ok'] : ['A bit stuck', 'mid'];
+  const stages = [
+    ['Cold', 'Getting seen by new people', st(c.tr.find, 'find'), 'Fuelled by Find content'],
+    ['Curious', 'Getting to know, like and trust you', st(c.tr.align, 'align'), 'Fuelled by Align content'],
+    ['Connected', 'Ready to chat about working together', st(c.tr.need, 'need'), 'Fuelled by Need content'],
+    ['Client', 'Saying yes', [`${up(c.cMo)} a month`, 'ok'], 'What your goal needs']];
+  return `<nav class="tabs" aria-label="Sections"><a href="#journey">Your journey</a><a href="#health">Content health</a><a href="#plan">Your plan</a><a href="#hooks">Hooks</a><a href="#numbers">The numbers</a><a href="#biz">Next step</a></nav>
+  <div class="sec" id="journey" style="margin-top:0"><h2>${nm ? nm + ', here\'s' : 'Here\'s'} your 2027 audience journey</h2>
+  <p class="sub">Every client moves through my 4C journey before they buy. Here's how smoothly people are moving through yours, based on your content check and your answers</p>
+  <div class="stages">${stages.map(([n, d, k, s], i) => `<div class="stage${i === leakIdx ? ' leak' : ''}"><span class="no">${i + 1}. ${n}</span><small>${d}</small><span class="k" style="font-size:clamp(24px,3vw,30px)">${k[0]}</span><small class="by">${s}</small></div>`).join('')}</div>
+  <div class="leakbox"><i>!</i><div><strong style="font-family:Inter,sans-serif;font-size:17px">Your leak: ${LEAK[c.mode][0]}</strong><br>${LEAK[c.mode][1]}</div></div></div>
+  <div class="sec" id="health"><h2>Your content health</h2><p class="sub">From your content check, weakest first</p>
+    <div class="bento" style="grid-template-columns:minmax(0,1fr) minmax(0,2.2fr)">
+      <div class="t olive"><small>Content health score</small><div class="score"><b>${c.health}</b><span>/ 12</span></div><small>${c.health >= 10 ? 'Strong foundations, now it\'s about strategy' : c.health >= 6 ? 'Some solid bits, a few gaps holding you back' : 'Plenty of room to grow, which is exciting'}</small></div>
+      <div class="health">${CHECK.map((ch, i) => [ch, c.scores[i], i]).sort((a, b) => a[1] - b[1]).map(([[mod, m, q, os], s]) => `<div class="hrow"><span><b>${mod}</b><small>${os[s]}</small></span><span class="segs lv${s + 1}"><i></i><i></i><i></i></span></div>`).join('')}</div></div></div>
+  <div class="sec" id="plan"><h2>Your 2027 focus: <em>${FOCUS[c.mode]}</em></h2><p class="sub">Your ${c.P} posts a week, split with my FAN Content Engine to plug your leak</p>
+    <div class="fan">
+      <div class="fc" style="background:var(--blush)"><span class="n">${c.fan[0]}</span><span><b>Find</b><small>Moves people from Cold to Curious. Relatable, shareable posts and reels that reach beyond your followers</small></span></div>
+      <div class="fc" style="background:var(--sage)"><span class="n">${c.fan[1]}</span><span><b>Align</b><small>Moves people from Curious to Connected. Your story, your opinions, behind the scenes, why <em>you</em></small></span></div>
+      <div class="fc" style="background:var(--rose)"><span class="n">${c.fan[2]}</span><span><b>Need</b><small>Moves people from Connected to Client. Client wins, how you work, the doubts people have before buying</small></span></div>
+    </div>
+    ${c.P >= 6 ? `<div class="nudge" style="border-color:var(--rose)">${ico(P.arrow)}<span>${c.P} a week is a lot alongside client work, so protect your energy. If it starts to slip, drop to 4 or 5 and keep the same FAN balance</span></div>` : ''}
+    ${c.P <= 2 ? `<div class="nudge">${ico(P.arrow)}<span>At ${c.P} a week every post has to work really hard. Your FAN split gets way more strategic at 4, so if you can stretch to it, do</span></div>` : ''}
+    <div class="rh" style="margin-top:14px"><div class="t"><b>${c.P}</b><span>feed posts a week, ${c.fan[0]} Find, ${c.fan[1]} Align, ${c.fan[2]} Need</span></div>
+    <div class="t"><b>3+</b><span>days of stories with a soft invite to work with you</span></div>
+    <div class="t"><b style="font-size:16px">Daily</b><span>chat with the people who reply to your stories and comment, that's where enquiries start</span></div>
+    ${S.ch.email?.on ? '<div class="t"><b>1</b><span>email a week to your list, with a clear invite at least once a month</span></div>' : ''}</div></div>
+  ${hk.length ? `<div class="sec" id="hooks"><h2>3 starter hooks for you</h2><p class="sub">Written with my Who? What? Wow! formula, tap any hook to tweak the wording, then copy it</p>
+    <div class="hooks">${hk.map((h, i) => `<div class="hook"><p contenteditable="true" spellcheck="true" aria-label="Hook ${i + 1}, tap to edit">${esc(h)}</p><button class="ghost" data-act="copy" data-i="${i}">Copy</button></div>`).join('')}</div></div>` : ''}
+  <div class="sec" id="numbers"><h2>The numbers behind it</h2><p class="sub">Based on ${money(c.G)}, ${c.months} selling months and ${closeTxt(S.close)} enquiries buying${c.refs ? `, minus ${up(c.refs)} referral clients` : ''}. Ballpark numbers from your answers, not a crystal ball, so use them as a guide not gospel</p>
+    <div class="bento"><div class="t sage"><div class="k">${money(c.G)}</div><small>your 2027 goal</small></div><div class="t"><div class="k">${up(c.cMo)}</div><small>new clients a month</small></div><div class="t"><div class="k">${up(c.eLo)} to ${up(c.eHi)}</div><small>enquiries a month from content</small></div><div class="t"><div class="k">${up(c.clientsYr)}</div><small>new clients across 2027</small></div></div>
+    <div class="t" style="margin-top:14px"><div class="sched">${c.rows.map(r => `<div class="srow"><span><b>${esc(r.name)}</b><small>${money(r.v)} per client, ${Math.round(r.sh * 100)}% of your goal, ${up(r.yr)} clients in 2027</small></span><span class="pill ${up(r.mo) > r.cap ? 'no' : 'ok'}">${up(r.mo)} a month, ${up(r.mo) > r.cap ? 'over your ' + r.cap : 'fits'}</span></div>`).join('')}</div></div>
+    ${f.map(([t, b]) => `<div class="flag"><i>!</i><div><strong>${t}</strong><span>${b}</span></div></div>`).join('')}</div>
+  <div class="sec share"><canvas id="card" width="1080" height="1920" aria-label="Your 2027 Content Map story card"></canvas>
+    <div><h2>Save your <em>Content Map</em></h2><p class="sub">Pop it on your stories so you're accountable all year, and tag me <strong>@digital.dais</strong> so I can cheer you on</p>
+    <button data-act="savecard">Save my story card</button><p class="fine">Not downloading? Just screenshot it</p></div></div>
+  <div class="sec biz" id="biz"><h2>Content is how you get there, <em>Bizfluencer™ is how you get it right</em></h2>
+    <p>Your leak is ${LEAK[c.mode][0]}, and your weakest areas are literally modules inside Bizfluencer™, my 12-week programme where we nail your personal brand and build an Instagram content strategy that turns followers into clients, with live group calls and content check-ins with me along the way</p>
+    ${c.weak.length ? `<div class="mods">${c.weak.map(w => `<div><span><b>${w.c[1]}</b> ${w.c[0]}</span><span style="opacity:.8">${w.c[3][w.s]}</span></div>`).join('')}</div>` : '<p>Your foundations are strong, so we\'d go straight into turning them into a content strategy that sells</p>'}
+    ${xmas ? `<div class="count"><b>${freeLabel()} free</b><span>Join today and you get full access straight away, but your 12 weeks of support don't start counting until Tue 5 Jan, and you're covered until 13th April 2027. The sooner you join, the more free time you get</span></div>` : ''}
+    <a class="btn" href="${SALES}" target="_blank" rel="noopener">Show me Bizfluencer™ ${ico(P.arrow, 18)}</a>
+    <p style="margin-top:12px;opacity:.85;font-size:14px">Payment plans available${xmas ? ', Christmas offer ends Fri 18 Dec at 6pm' : ''}</p></div>
+  <p style="text-align:center;margin-top:24px"><button class="link" data-act="restart">Start a new Content Map</button></p>`;
+}
+
+function results() {
+  const c = calc();
+  const dots = [['8%','14%',14,'var(--blush)'],['88%','10%',10,'var(--sage)'],['14%','72%',9,'var(--rose)'],['84%','64%',16,'var(--blush)'],['70%','22%',8,'var(--olive)'],['26%','30%',7,'var(--sage)']];
+  const li = {find:0, align:1, need:2}[c.mode];
+  return `<div class="dash">${PREVIEW ? '<div class="warn" style="margin:0 0 16px">Admin preview with sample answers, nothing here is saved or sent to Kit</div>' : ''}
+  <div class="dhead"><div class="brand" style="margin:0"><i>D</i>Digital Dais</div><button class="ghost" data-act="back" style="min-height:44px;padding:8px 18px">${ico(P.back, 16)} Edit answers</button></div>
+  <div class="reveal">${dots.map(([x, y, s, col]) => `<span class="conf" style="left:${x};top:${y};width:${s}px;height:${s}px;background:${col}"></span>`).join('')}
+    <p class="sub">To bring in ${money(c.G)} in 2027, your content focus is</p><div class="big">${FOCUS[c.mode]}</div>
+    <div class="journey">${['Cold','Curious','Connected','Client'].map((n, i) => `<span class="${i === li || i === li + 1 ? 'leak' : ''}">${n}</span>`).join('<i>→</i>')}</div>
+    <p class="hint">Your audience is leaking at ${LEAK[c.mode][0]}</p></div>
+  ${S.unlocked ? '' : `<div class="gate"><h2>Your full <em>Content Map</em> is ready</h2>
+    <p class="sub">Unlock your 4C audience journey, your content health score, your FAN posting plan, 3 starter hooks and your story card</p>
+    <form id="gate" novalidate><div class="g2"><div><label class="f" for="fn">First name</label><input id="fn" type="text" autocomplete="given-name" required></div>
+    <div><label class="f" for="em">Email</label><input id="em" type="email" autocomplete="email" required></div></div>
+    <div class="warn" id="gw"></div><button type="submit" style="margin-top:18px;width:100%">Unlock my Content Map</button>
+    <p class="fine" style="text-align:center">You'll also get my emails on content and growing your biz, unsubscribe any time. <a href="https://learn.digitaldais.co.uk/privacy.html" target="_blank" rel="noopener" style="color:inherit">Privacy policy</a></p></form></div>`}
+  <div id="rep" style="margin-top:26px" class="${S.unlocked ? '' : 'locked'}" ${S.unlocked ? '' : 'aria-hidden="true"'}>${report(c)}</div></div>`;
+}
+
+function valid() {
+  const s = scr();
+  if (s === 'goal') return num(S.goal) > 0;
+  if (s === 'offers') return S.offers.some(o => num(o.price) > 0);
+  if (s === 'platforms') return CH.some(([k]) => S.ch[k]?.on);
+  if (s === 'warmth') return S.dunno || String(S.enq).trim() !== '';
+  if (s[0] === 'c' && s.length === 2) return S.cc[+s[1]] !== null;
+  return true;
+}
+
+function live() {
+  const n = $('#next'); if (n) n.disabled = !valid();
+  const s = scr(), c = calc();
+  if (s === 'goal') {
+    const b = $('#built'); if (b) b.textContent = money(built());
+    const g = num(S.goal), l = num(S.last); let w = '';
+    if (g > 0 && g < 5000) w = 'Just checking, is that for the whole year? This is your annual total, not monthly';
+    else if (l > 0 && g > l * 3) w = `That's ${r1(g / l)}x your 2026. Go for it if it feels right, just know your content will need to work a lot harder, which is exactly what you're about to map out`;
+    $('#w1').textContent = w;
+    document.querySelectorAll('[data-k="goal"]').forEach(el => el.classList.toggle('on', num(el.dataset.v) === g));
+  }
+  if (s === 'offers') {
+    const tot = S.offers.filter(o => num(o.price) > 0).reduce((a, o) => a + num(o.share), 0) || 1;
+    S.offers.forEach((o, i) => { const sh = $('#sh' + i); if (sh) sh.textContent = (num(o.price) > 0 ? Math.round(num(o.share) / tot * 100) : 0) + '%';
+      const r = c.rows.find(x => x.o === o), el = $('#cp' + i);
+      if (el) el.innerHTML = r && c.G ? `<span class="pill ${up(r.mo) > r.cap ? 'no' : 'ok'}" style="margin-top:6px">Your goal needs ${up(r.mo)} a month${up(r.mo) > r.cap ? '' : ', fits'}</span>` : ''; });
+  }
+  if (s === 'warmth') {
+    const e = num(S.enq); let w = '';
+    if (!S.dunno && c.A > 0 && e > c.A * 0.05) w = 'That\'s a really high number for your audience size, make sure you\'re only counting people who asked about buying';
+    if (S.close >= 6) w += (w ? '. ' : '') + 'Most people sit around 3 in 10, so if you\'re guessing, pick that one';
+    $('#w5').textContent = w;
+  }
+}
+
+function render() {
+  const st = $('#stage'), s = scr();
+  if (s === 'intro') st.innerHTML = intro();
+  else if (s === 'results') st.innerHTML = results();
+  else {
+    const gi = GROUPS.findIndex(g => g[2].includes(s)), pct = S.step / (SCREENS.length - 2) * 100;
+    st.innerHTML = `<div class="split">${side()}<section class="main">
+    <div class="bar"><button class="circ" data-act="back" aria-label="Back">${ico(P.back, 18)}</button><span class="prog"><i style="width:${pct}%"></i></span><b style="font-size:14px">${gi + 1}/6</b></div>
+    <div class="q">${s[0] === 'c' && s.length === 2 ? '' : `<div class="qno">Step ${gi + 1} of 6</div>`}${Q[s]()}</div>
+    <div class="nav"><button class="ghost" data-act="back">Back</button><button id="next" data-act="next">${s === 'posts' ? 'Show me my Content Map' : 'Next'} ${ico(P.arrow, 18)}</button></div></section></div>`;
+  }
+  live();
+  if (s === 'results' && S.unlocked) drawCard(calc());
+}
+
+async function drawCard(c) {
+  const cv = $('#card'); if (!cv) return; const x = cv.getContext('2d'), W = 1080, H = 1920;
+  try { await document.fonts.ready; } catch (e) {}
+  const rr = (X, Y, w, h, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect ? x.roundRect(X, Y, w, h, r) : x.rect(X, Y, w, h); x.fill(); };
+  x.fillStyle = '#f4efe8'; x.fillRect(0, 0, W, H);
+  x.fillStyle = '#eecfc7'; x.beginPath(); x.arc(960, 170, 260, 0, 7); x.fill();
+  x.fillStyle = '#c1c9aa'; x.beginPath(); x.arc(760, 330, 120, 0, 7); x.fill();
+  x.fillStyle = '#4b4626'; x.font = '600 50px "DM Sans", sans-serif'; x.fillText('My 2027', 90, 220);
+  x.font = '900 120px Inter, sans-serif'; x.fillText('Content Map', 80, 350);
+  rr(80, 450, 920, 380, 56, '#6a7148');
+  x.fillStyle = 'rgba(244,239,232,.8)'; x.font = '500 46px "DM Sans", sans-serif'; x.fillText('My content focus', 140, 550);
+  x.fillStyle = '#f4efe8'; x.font = `italic 900 ${FOCUS[c.mode].length > 12 ? 96 : 150}px Inter, sans-serif`; x.fillText(FOCUS[c.mode], 128, 730);
+  const tiles = [[c.fan[0], 'Find posts', '#eecfc7'], [c.fan[1], 'Align posts', '#c1c9aa'], [c.fan[2], 'Need posts', '#ce998a']];
+  tiles.forEach(([v, l, col], i) => { const X = 80 + i * 313; rr(X, 870, 293, 330, 48, col);
+    x.fillStyle = '#4b4626'; x.font = '900 140px Inter, sans-serif'; x.fillText(String(v), X + 36, 1050);
+    x.font = '600 40px "DM Sans", sans-serif'; x.fillText(l, X + 38, 1120); x.font = '500 34px "DM Sans", sans-serif'; x.fillText('a week', X + 38, 1162); });
+  rr(80, 1240, 920, 260, 48, '#ffffff');
+  x.fillStyle = 'rgba(75,70,38,.7)'; x.font = '500 40px "DM Sans", sans-serif'; x.fillText('Plugging my leak', 140, 1330);
+  x.fillStyle = '#4b4626'; x.font = 'italic 900 80px Inter, sans-serif'; x.fillText(LEAK[c.mode][0], 136, 1435);
+  x.font = '600 40px "DM Sans", sans-serif'; x.fillText('Made with the 2027 Content Map', 90, 1760); x.fillText('by @digital.dais', 90, 1815);
+}
+
+async function unlock(e) {
+  e.preventDefault();
+  const fn = $('#fn').value.trim(), em = $('#em').value.trim();
+  if (!fn || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) { $('#gw').textContent = 'Pop in your first name and a proper email and it\'s all yours'; return; }
+  S.fname = fn; S.email = em; S.unlocked = true; save();
+  if (KIT_FORM_ID) { try { const fd = new FormData(); fd.append('email_address', em); fd.append('fields[first_name]', fn);
+    fetch(`https://app.kit.com/forms/${KIT_FORM_ID}/subscriptions`, {method: 'POST', body: fd, mode: 'no-cors', keepalive: true}).catch(() => {}); } catch (err) {} }
+  render(); $('#rep')?.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion:reduce)').matches ? 'auto' : 'smooth'});
+}
+
+document.addEventListener('input', e => { const el = e.target, b = el.dataset.b; if (!b) return;
+  setP(b, el.type === 'range' ? Number(el.value) : el.value); save(); live(); });
+document.addEventListener('submit', e => { if (e.target.id === 'gate') unlock(e); });
+document.addEventListener('click', e => { const t = e.target.closest('[data-act]'); if (!t) return; const a = t.dataset.act, k = t.dataset.k;
+  if (a === 'next') { if (!valid()) return; S.step = Math.min(SCREENS.length - 1, S.step + 1); }
+  else if (a === 'back') S.step = Math.max(0, S.step - 1);
+  else if (a === 'ui') S.ui[k] = !S.ui[k];
+  else if (a === 'set') { const v = t.dataset.num !== undefined ? Number(t.dataset.v) : t.dataset.v; setP(k, k === 'goal' ? String(v) : v); }
+  else if (a === 'cc') { S.cc[+t.dataset.i] = +t.dataset.v; save(); render(); setTimeout(() => { S.step++; save(); render(); scrollTo(0, 0); }, 280); return; }
+  else if (a === 'toggle') S[k] = !S[k];
+  else if (a === 'inc') setP(k, Math.min(+t.dataset.max, Math.max(+t.dataset.min, num(getP(k)) + +t.dataset.d)));
+  else if (a === 'usebuilt') { if (built() > 0) S.goal = String(Math.round(built())); }
+  else if (a === 'add') S.offers.push({name:'', price:'', type:'one', stay:6, share:50, cap:4});
+  else if (a === 'rm') S.offers.splice(+t.dataset.i, 1);
+  else if (a === 'ch') { S.ch[k] = S.ch[k] || {on:false, size:''}; S.ch[k].on = !S.ch[k].on; }
+  else if (a === 'restart') S = fresh();
+  else if (a === 'copy') { const h = t.parentElement.querySelector('p').textContent.trim(); navigator.clipboard?.writeText(h).then(() => { t.textContent = 'Copied'; }, () => { t.textContent = 'Select and copy'; }); return; }
+  else if (a === 'savecard') { try { $('#card').toBlob(bl => { const l = document.createElement('a'); l.href = URL.createObjectURL(bl); l.download = 'my-2027-content-map.png'; document.body.appendChild(l); l.click(); l.remove(); }); } catch (err) {} return; }
+  else return;
+  const y = scrollY; save(); render();
+  if (['next', 'back', 'restart'].includes(a)) scrollTo(0, 0); else scrollTo(0, y); });
+
+render();
+}
+</script>
+</body>
+</html>
